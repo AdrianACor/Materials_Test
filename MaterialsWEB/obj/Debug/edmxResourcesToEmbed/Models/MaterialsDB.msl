@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MaterialsModelStoreContainer" CdmEntityContainer="MaterialsEntities">
+    <EntitySetMapping Name="Buildings">
+      <EntityTypeMapping TypeName="MaterialsModel.Buildings">
+        <MappingFragment StoreEntitySet="Buildings">
+          <ScalarProperty Name="PKBuilding" ColumnName="PKBuilding" />
+          <ScalarProperty Name="Building" ColumnName="Building" />
+          <ScalarProperty Name="Available" ColumnName="Available" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Customers">
+      <EntityTypeMapping TypeName="MaterialsModel.Customers">
+        <MappingFragment StoreEntitySet="Customers">
+          <ScalarProperty Name="PKCustomers" ColumnName="PKCustomers" />
+          <ScalarProperty Name="Customer" ColumnName="Customer" />
+          <ScalarProperty Name="Prefix" ColumnName="Prefix" />
+          <ScalarProperty Name="FKBuilding" ColumnName="FKBuilding" />
+          <ScalarProperty Name="Available" ColumnName="Available" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PartNumbers">
+      <EntityTypeMapping TypeName="MaterialsModel.PartNumbers">
+        <MappingFragment StoreEntitySet="PartNumbers">
+          <ScalarProperty Name="PKPartNumber" ColumnName="PKPartNumber" />
+          <ScalarProperty Name="PartNumber" ColumnName="PartNumber" />
+          <ScalarProperty Name="FKCustomer" ColumnName="FKCustomer" />
+          <ScalarProperty Name="Available" ColumnName="Available" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="InsertBuildings" FunctionName="MaterialsModel.Store.InsertBuildings" />
+    <FunctionImportMapping FunctionImportName="InsertCustomers" FunctionName="MaterialsModel.Store.InsertCustomers" />
+    <FunctionImportMapping FunctionImportName="InsertPartNumber" FunctionName="MaterialsModel.Store.InsertPartNumber" />
+    <FunctionImportMapping FunctionImportName="consultaP" FunctionName="MaterialsModel.Store.consultaP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MaterialsModel.consultaP_Result">
+          <ScalarProperty Name="PartNumber" ColumnName="PartNumber" />
+          <ScalarProperty Name="Customer" ColumnName="Customer" />
+          <ScalarProperty Name="Building" ColumnName="Building" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

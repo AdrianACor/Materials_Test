@@ -1,0 +1,264 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MaterialsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Buildings">
+          <Key>
+            <PropertyRef Name="PKBuilding" />
+          </Key>
+          <Property Name="PKBuilding" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Building" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Available" Type="bit" />
+        </EntityType>
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="PKCustomers" />
+          </Key>
+          <Property Name="PKCustomers" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Customer" Type="nvarchar" MaxLength="50" />
+          <Property Name="Prefix" Type="nvarchar" MaxLength="5" />
+          <Property Name="FKBuilding" Type="int" />
+          <Property Name="Available" Type="bit" />
+        </EntityType>
+        <EntityType Name="PartNumbers">
+          <Key>
+            <PropertyRef Name="PKPartNumber" />
+          </Key>
+          <Property Name="PKPartNumber" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PartNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="FKCustomer" Type="int" />
+          <Property Name="Available" Type="bit" />
+        </EntityType>
+        <Association Name="FK_Customers_Buildings">
+          <End Role="Buildings" Type="Self.Buildings" Multiplicity="0..1" />
+          <End Role="Customers" Type="Self.Customers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Buildings">
+              <PropertyRef Name="PKBuilding" />
+            </Principal>
+            <Dependent Role="Customers">
+              <PropertyRef Name="FKBuilding" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PartNumbers_Customers">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="0..1" />
+          <End Role="PartNumbers" Type="Self.PartNumbers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="PKCustomers" />
+            </Principal>
+            <Dependent Role="PartNumbers">
+              <PropertyRef Name="FKCustomer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="consultaP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PartNumber" Type="nvarchar" Mode="In" />
+          <Parameter Name="Customer" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="InsertBuildings" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="BuildingName" Type="nvarchar" Mode="In" />
+          <Parameter Name="Available" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="InsertCustomers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CustomerName" Type="nvarchar" Mode="In" />
+          <Parameter Name="Prefix" Type="nvarchar" Mode="In" />
+          <Parameter Name="FKBuilding" Type="int" Mode="In" />
+          <Parameter Name="Available" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="InsertPartNumber" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PartNumber" Type="nvarchar" Mode="In" />
+          <Parameter Name="FKCustomer" Type="int" Mode="In" />
+          <Parameter Name="Available" Type="bit" Mode="In" />
+        </Function>
+        <EntityContainer Name="MaterialsModelStoreContainer">
+          <EntitySet Name="Buildings" EntityType="Self.Buildings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PartNumbers" EntityType="Self.PartNumbers" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Customers_Buildings" Association="Self.FK_Customers_Buildings">
+            <End Role="Buildings" EntitySet="Buildings" />
+            <End Role="Customers" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PartNumbers_Customers" Association="Self.FK_PartNumbers_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="PartNumbers" EntitySet="PartNumbers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MaterialsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Buildings">
+          <Key>
+            <PropertyRef Name="PKBuilding" />
+          </Key>
+          <Property Name="PKBuilding" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Building" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Available" Type="Boolean" />
+          <NavigationProperty Name="Customers" Relationship="Self.FK_Customers_Buildings" FromRole="Buildings" ToRole="Customers" />
+        </EntityType>
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="PKCustomers" />
+          </Key>
+          <Property Name="PKCustomers" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Customer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Prefix" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="FKBuilding" Type="Int32" />
+          <Property Name="Available" Type="Boolean" />
+          <NavigationProperty Name="Buildings" Relationship="Self.FK_Customers_Buildings" FromRole="Customers" ToRole="Buildings" />
+          <NavigationProperty Name="PartNumbers" Relationship="Self.FK_PartNumbers_Customers" FromRole="Customers" ToRole="PartNumbers" />
+        </EntityType>
+        <EntityType Name="PartNumbers">
+          <Key>
+            <PropertyRef Name="PKPartNumber" />
+          </Key>
+          <Property Name="PKPartNumber" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PartNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FKCustomer" Type="Int32" />
+          <Property Name="Available" Type="Boolean" />
+          <NavigationProperty Name="Customers" Relationship="Self.FK_PartNumbers_Customers" FromRole="PartNumbers" ToRole="Customers" />
+        </EntityType>
+        <Association Name="FK_Customers_Buildings">
+          <End Role="Buildings" Type="Self.Buildings" Multiplicity="0..1" />
+          <End Role="Customers" Type="Self.Customers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Buildings">
+              <PropertyRef Name="PKBuilding" />
+            </Principal>
+            <Dependent Role="Customers">
+              <PropertyRef Name="FKBuilding" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PartNumbers_Customers">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="0..1" />
+          <End Role="PartNumbers" Type="Self.PartNumbers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="PKCustomers" />
+            </Principal>
+            <Dependent Role="PartNumbers">
+              <PropertyRef Name="FKCustomer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MaterialsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Buildings" EntityType="Self.Buildings" />
+          <EntitySet Name="Customers" EntityType="Self.Customers" />
+          <EntitySet Name="PartNumbers" EntityType="Self.PartNumbers" />
+          <AssociationSet Name="FK_Customers_Buildings" Association="Self.FK_Customers_Buildings">
+            <End Role="Buildings" EntitySet="Buildings" />
+            <End Role="Customers" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PartNumbers_Customers" Association="Self.FK_PartNumbers_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="PartNumbers" EntitySet="PartNumbers" />
+          </AssociationSet>
+          <FunctionImport Name="InsertBuildings">
+            <Parameter Name="BuildingName" Mode="In" Type="String" />
+            <Parameter Name="Available" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="InsertCustomers">
+            <Parameter Name="CustomerName" Mode="In" Type="String" />
+            <Parameter Name="Prefix" Mode="In" Type="String" />
+            <Parameter Name="FKBuilding" Mode="In" Type="Int32" />
+            <Parameter Name="Available" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="InsertPartNumber">
+            <Parameter Name="PartNumber" Mode="In" Type="String" />
+            <Parameter Name="FKCustomer" Mode="In" Type="Int32" />
+            <Parameter Name="Available" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="consulta" ReturnType="Collection(MaterialsModel.consulta_Result)" />
+          <FunctionImport Name="consultaP" ReturnType="Collection(MaterialsModel.consultaP_Result)">
+            <Parameter Name="PartNumber" Mode="In" Type="String" />
+            <Parameter Name="Customer" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="consulta_Result">
+          <Property Type="String" Name="PartNumber" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Customer" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Building" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="consultaP_Result">
+          <Property Type="String" Name="PartNumber" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Customer" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Building" Nullable="false" MaxLength="50" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MaterialsModelStoreContainer" CdmEntityContainer="MaterialsEntities">
+          <EntitySetMapping Name="Buildings">
+            <EntityTypeMapping TypeName="MaterialsModel.Buildings">
+              <MappingFragment StoreEntitySet="Buildings">
+                <ScalarProperty Name="PKBuilding" ColumnName="PKBuilding" />
+                <ScalarProperty Name="Building" ColumnName="Building" />
+                <ScalarProperty Name="Available" ColumnName="Available" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="MaterialsModel.Customers">
+              <MappingFragment StoreEntitySet="Customers">
+                <ScalarProperty Name="PKCustomers" ColumnName="PKCustomers" />
+                <ScalarProperty Name="Customer" ColumnName="Customer" />
+                <ScalarProperty Name="Prefix" ColumnName="Prefix" />
+                <ScalarProperty Name="FKBuilding" ColumnName="FKBuilding" />
+                <ScalarProperty Name="Available" ColumnName="Available" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PartNumbers">
+            <EntityTypeMapping TypeName="MaterialsModel.PartNumbers">
+              <MappingFragment StoreEntitySet="PartNumbers">
+                <ScalarProperty Name="PKPartNumber" ColumnName="PKPartNumber" />
+                <ScalarProperty Name="PartNumber" ColumnName="PartNumber" />
+                <ScalarProperty Name="FKCustomer" ColumnName="FKCustomer" />
+                <ScalarProperty Name="Available" ColumnName="Available" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="InsertBuildings" FunctionName="MaterialsModel.Store.InsertBuildings" />
+          <FunctionImportMapping FunctionImportName="InsertCustomers" FunctionName="MaterialsModel.Store.InsertCustomers" />
+          <FunctionImportMapping FunctionImportName="InsertPartNumber" FunctionName="MaterialsModel.Store.InsertPartNumber" />
+          <FunctionImportMapping FunctionImportName="consultaP" FunctionName="MaterialsModel.Store.consultaP">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaterialsModel.consultaP_Result">
+                <ScalarProperty Name="PartNumber" ColumnName="PartNumber" />
+                <ScalarProperty Name="Customer" ColumnName="Customer" />
+                <ScalarProperty Name="Building" ColumnName="Building" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
