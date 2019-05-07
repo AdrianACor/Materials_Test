@@ -11,8 +11,7 @@ namespace MaterialsWEB.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations.Schema;
-
+    
     public partial class PartNumbers
     {
         public int PKPartNumber { get; set; }
@@ -22,7 +21,6 @@ namespace MaterialsWEB.Models
     
         public virtual Customers Customers { get; set; }
 
-        [NotMapped]
         public List<Customers> CustomersCol { get; set; }
     }
 }

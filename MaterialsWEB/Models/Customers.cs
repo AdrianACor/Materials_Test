@@ -11,8 +11,7 @@ namespace MaterialsWEB.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations.Schema;
-
+    
     public partial class Customers
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -20,18 +19,17 @@ namespace MaterialsWEB.Models
         {
             this.PartNumbers = new HashSet<PartNumbers>();
         }
-
+    
         public int PKCustomers { get; set; }
         public string Customer { get; set; }
         public string Prefix { get; set; }
         public Nullable<int> FKBuilding { get; set; }
         public Nullable<bool> Available { get; set; }
-
+    
         public virtual Buildings Buildings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PartNumbers> PartNumbers { get; set; }
 
-        [NotMapped]
-        public List<Buildings> BuildingsCol { get; set; }
+        public List<Buildings> BuildingsCol { get; set;}
     }
 }

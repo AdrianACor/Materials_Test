@@ -1,10 +1,13 @@
+use materials
+go
+
 --Inserts Buildings
 INSERT INTO Buildings
      VALUES('EDIFICIO1',1);
 INSERT INTO Buildings
      VALUES('EDIFICIO1',2);
 INSERT INTO Buildings
-     VALUES('EDIFICIO1',3;
+     VALUES('EDIFICIO1',3);
 
 --Inserts Customers
 INSERT INTO Customers
@@ -27,4 +30,3 @@ INSERT INTO PartNumbers
      VALUES('2001',3,1);
 INSERT INTO PartNumbers
      VALUES('2002',3,1);
-
